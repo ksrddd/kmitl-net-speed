@@ -1,13 +1,25 @@
-export const useApi = () => {
-  const base = "http://localhost:4000/api"
+const API = "http://localhost:4000/api"
 
-  return {
-    speed: () => $fetch(`${base}/speed`),
-    usage: () => $fetch(`${base}/usage`),
-    networks: (l) => $fetch(`${base}/networks?location=${l}`),
-    report: (d) => $fetch(`${base}/report`, {
+export const useApi = () => {
+
+  const getSpeed = async () => {
+    return await $fetch(`${API}/speed`)
+  }
+
+  const getUsage = async () => {
+    return await $fetch(`${API}/usage`)
+  }
+
+  const getNetworks = async () => {
+    return await $fetch(`${API}/networks`)
+  }
+
+  const sendReport = async (data) => {
+    return await $fetch(`${API}/report`, {
       method: "POST",
-      body: d
+      body: data
     })
   }
+
+  return { getSpeed, getUsage, getNetworks, sendReport }
 }
