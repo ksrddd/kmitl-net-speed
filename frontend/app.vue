@@ -1,23 +1,59 @@
 <script setup>
-import Navbar from "@/components/Navbar.vue"
 import { useAuthStore } from "@/stores/auth"
+import { useRouter } from "vue-router"
+import { onMounted } from "vue"
+
 const auth = useAuthStore()
-auth.load()
+const router = useRouter()
+
+onMounted(() => {
+  auth.load()
+})
+
+const logout = () => {
+  auth.logout()
+  router.push("/")
+}
 </script>
+
 
 <template>
   <div>
 
     <nav class="navbar navbar-expand-lg shadow-sm" style="background:#F36F21;">
       <div class="container">
+
         <NuxtLink class="navbar-brand fw-bold text-white" to="/">
           KMITL NET
         </NuxtLink>
 
         <div class="navbar-nav ms-auto">
-          <NuxtLink class="nav-link text-white" to="/">Home</NuxtLink>
-          <NuxtLink class="nav-link text-white" to="/dashboard">Dashboard</NuxtLink>
-          <NuxtLink class="nav-link text-white" to="/login">Login</NuxtLink>
+
+          <!-- Home -->
+          <NuxtLink class="nav-link text-white" to="/">
+            <span v-if="auth.isLoggedIn">
+              Welcome {{ auth.user?.email }}
+            </span>
+            <span v-else>
+              Home
+            </span>
+          </NuxtLink>
+
+          <!-- Dashboard -->
+          <NuxtLink v-if="auth.isLoggedIn" class="nav-link text-white" to="/dashboard">
+            Dashboard
+          </NuxtLink>
+
+          <!-- Login -->
+          <NuxtLink v-if="!auth.isLoggedIn" class="nav-link text-white" to="/login">
+            Login
+          </NuxtLink>
+
+          <!-- Logout -->
+          <button v-if="auth.isLoggedIn" class="nav-link text-white btn btn-link" @click="logout">
+            Logout
+          </button>
+
         </div>
       </div>
     </nav>
@@ -28,28 +64,3 @@ auth.load()
 
   </div>
 </template>
-
-
-
-<style>
-:root {
-  --primary: #F36F21;
-  --primary-soft: #FFF3EB;
-  --cream: #FFF8F3;
-  --text-dark: #2b2b2b;
-}
-
-body {
-  background: var(--cream);
-  color: var(--text-dark);
-}
-
-.btn-primary {
-  background: var(--primary) !important;
-  border: none !important;
-}
-
-.card {
-  border-radius: 18px !important;
-}
-</style>

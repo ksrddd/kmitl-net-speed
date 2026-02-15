@@ -1,9 +1,11 @@
-import express from "express"
-const router = express.Router()
+router.post("/report", async (req, res) => {
+    const { message } = req.body
+    const user = req.user?.email || "guest"
 
-router.post("/report", (req,res)=>{
-    console.log(req.body)
-    res.json({status:"ok"})
+    await db.query(
+        "INSERT INTO reports (user_email, message) VALUES (?,?)",
+        [user, message]
+    )
+
+    res.json({ success: true })
 })
-
-export default router

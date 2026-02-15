@@ -1,25 +1,24 @@
 /* =====================================================
-   KMITL DESIGN SYSTEM
+   KMITL MINIMAL DESIGN SYSTEM (CLEAN VERSION)
 ===================================================== */
 
 :root {
   --primary: #F36F21;
   --primary-dark: #d85e1c;
-  --primary-soft: #fff1e8;
+  --primary-soft: #fff3eb;
 
-  --bg: #fffaf6;
-  --bg-soft: #fff3eb;
+  --bg: #ffffff;
+  --bg-soft: #fff7f2;
 
   --text: #2c2c2c;
-  --border: #f1f1f1;
+  --border: #eeeeee;
 
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 30px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
 
-  --shadow-sm: 0 4px 14px rgba(0, 0, 0, .05);
-  --shadow-md: 0 10px 30px rgba(0, 0, 0, .08);
-  --shadow-lg: 0 40px 80px rgba(255, 122, 0, .15);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, .06);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, .08);
 }
 
 
@@ -30,15 +29,13 @@
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(circle at 10% 20%, #ffd9b8 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, #ffc999 0%, transparent 40%),
-    linear-gradient(180deg, #fffaf6, #fff3eb);
+  background: var(--bg-soft);
   -webkit-font-smoothing: antialiased;
 }
 
 * {
-  transition: .25s ease;
+  box-sizing: border-box;
+  transition: .2s ease;
 }
 
 
@@ -52,7 +49,7 @@ h3,
 h4,
 h5 {
   font-weight: 700;
-  letter-spacing: .3px;
+  letter-spacing: .2px;
 }
 
 
@@ -61,22 +58,18 @@ h5 {
 ===================================================== */
 
 .navbar {
-  background: linear-gradient(90deg, #ff7a00, #ff9a3c) !important;
-  backdrop-filter: blur(10px);
+  background: var(--primary) !important;
+  box-shadow: var(--shadow-sm);
 }
 
-.navbar-brand {
-  color: #fff !important;
-  font-weight: 700;
-}
-
+.navbar-brand,
 .nav-link {
-  color: #fff !important;
-  font-weight: 500;
+  color: white !important;
+  font-weight: 600;
 }
 
 .nav-link:hover {
-  color: #ffe5d0 !important;
+  opacity: .8;
 }
 
 
@@ -85,7 +78,7 @@ h5 {
 ===================================================== */
 
 .btn-primary {
-  background: linear-gradient(135deg, #ff7a00, #ff9a3c) !important;
+  background: var(--primary) !important;
   border: none !important;
   border-radius: var(--radius-sm);
   font-weight: 600;
@@ -93,8 +86,8 @@ h5 {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(243, 111, 33, .4);
+  background: var(--primary-dark) !important;
+  transform: translateY(-1px);
 }
 
 .btn-outline-primary {
@@ -106,7 +99,7 @@ h5 {
 
 .btn-outline-primary:hover {
   background: var(--primary);
-  color: #fff;
+  color: white;
 }
 
 
@@ -117,20 +110,13 @@ h5 {
 .card {
   border: none !important;
   border-radius: var(--radius-md) !important;
-  background: #fff;
+  background: white;
   box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-}
-
-/* glass */
-.card-glass {
-  background: rgba(255, 255, 255, .7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, .4);
 }
 
 
@@ -146,85 +132,16 @@ h5 {
 
 .form-control:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(243, 111, 33, .15);
+  box-shadow: 0 0 0 3px rgba(243, 111, 33, .15);
 }
 
 
 /* =====================================================
-   HERO
+   SECTION
 ===================================================== */
 
-.hero {
-  position: relative;
-  padding: 120px 20px;
-  background: linear-gradient(135deg, #ffd9b8, #ffb37a);
-  overflow: hidden;
-}
-
-/* glass card */
-.hero-card {
-  position: relative;
-  z-index: 2;
-  max-width: 720px;
-  margin: auto;
-  padding: 60px 40px;
-
-  background: rgba(255, 255, 255, .25);
-  backdrop-filter: blur(18px);
-  border-radius: 30px;
-
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, .08),
-    inset 0 1px rgba(255, 255, 255, .4);
-}
-
-/* title */
-.hero-card h1 {
-  font-size: 42px;
-  font-weight: 800;
-  color: #5a2e00;
-  margin-bottom: 12px;
-}
-
-/* subtitle */
-.subtitle {
-  font-size: 18px;
-  opacity: .8;
-}
-
-/* glowing blobs */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: .35;
-}
-
-.orb1 {
-  width: 300px;
-  height: 300px;
-  background: #ff7a00;
-  top: -80px;
-  left: -80px;
-}
-
-.orb2 {
-  width: 280px;
-  height: 280px;
-  background: #ffb347;
-  bottom: -100px;
-  right: -80px;
-}
-
-/* mobile */
-@media(max-width:768px) {
-  .hero-card {
-    padding: 40px 25px;
-  }
-
-  .hero-card h1 {
-    font-size: 30px;
-  }
+.section {
+  padding: 80px 20px;
 }
 
 
@@ -234,27 +151,15 @@ h5 {
 
 .feature-card {
   padding: 30px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, .6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 140, 60, .2);
-  box-shadow: 0 20px 60px rgba(255, 122, 0, .08);
+  border-radius: var(--radius-md);
+  background: white;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   text-align: center;
 }
 
 .feature-card:hover {
-  transform: translateY(-8px) scale(1.02);
-}
-
-
-/* =====================================================
-   SECTIONS
-===================================================== */
-
-.section-soft {
-  background: linear-gradient(180deg, #fffaf6, #ffe9d6);
-  border-radius: 40px;
-  padding: 60px;
+  transform: translateY(-6px);
 }
 
 
@@ -264,6 +169,7 @@ h5 {
 
 a {
   color: var(--primary);
+  text-decoration: none;
 }
 
 a:hover {
@@ -276,7 +182,7 @@ a:hover {
 ===================================================== */
 
 .bg-primary {
-  background: linear-gradient(90deg, #ff7a00, #ff9a3c) !important;
+  background: var(--primary) !important;
 }
 
 .text-primary {

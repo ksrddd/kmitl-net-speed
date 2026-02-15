@@ -2,6 +2,7 @@ import express from "express"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import db from "../../config/db.js"
+import { verifyToken } from "../../middleware/authMiddleware.js"
 
 const router = express.Router()
 
@@ -74,5 +75,24 @@ router.post("/login", (req, res) => {
         }
     )
 })
+// =========================
+// ME (verify token + user exist)
+// =========================
+router.get("/me", verifyToken, (req, res) => {
 
+    db.query(
+        "SELECT id,email FROM users WHERE id=?",
+        [req.user.id],
+        (err, result) => {
+
+            if (err)
+                return res.status(500).json(err)
+
+            if (result.length === 0)
+                return res.status(401).json({ msg: "User deleted" })
+
+            res.json(result[0])
+        }
+    )
+})
 export default router

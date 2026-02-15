@@ -3,7 +3,7 @@ import { defineStore } from "pinia"
 export const useAuthStore = defineStore("auth", {
     state: () => ({
         token: null,
-        user: null
+        email: null
     }),
 
     getters: {
@@ -11,37 +11,26 @@ export const useAuthStore = defineStore("auth", {
     },
 
     actions: {
-        login(token, user) {
+        login(token, email) {
             this.token = token
-            this.user = user
-
+            this.email = email
             localStorage.setItem("token", token)
-            localStorage.setItem("user", JSON.stringify(user))
+            localStorage.setItem("email", email)
+        },
+
+        logout() {
+            this.token = null
+            this.email = null
+            localStorage.removeItem("token")
+            localStorage.removeItem("email")
         },
 
         load() {
-            if (typeof window !== "undefined") {
-                const token = localStorage.getItem("token")
-                const user = localStorage.getItem("user")
-
-                if (token) this.token = token
-
-                if (user && user !== "undefined") {
-                    try {
-                        this.user = JSON.parse(user)
-                    } catch {
-                        this.user = null
-                    }
-                }
+            if (process.client) {
+                this.token = localStorage.getItem("token")
+                this.email = localStorage.getItem("email")
             }
         }
-        ,
-        logout() {
-            this.token = null
-            this.user = null
 
-            localStorage.removeItem("token")
-            localStorage.removeItem("user")
-        }
     }
 })

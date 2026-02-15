@@ -1,9 +1,11 @@
-import { db } from "../config/db.js"
+import db from "../db.js"
 
-export const getNetworks = async (req,res)=>{
-  const [rows] = await db.query(
-    "SELECT * FROM networks WHERE location=?",
-    [req.query.location]
+export const getNetworks = (req, res) => {
+  db.query(
+    "SELECT id,name,speed FROM networks ORDER BY speed DESC",
+    (err, result) => {
+      if (err) return res.status(500).json(err)
+      res.json(result)
+    }
   )
-  res.json(rows)
 }

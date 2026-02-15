@@ -1,6 +1,12 @@
 export default defineNuxtRouteMiddleware(() => {
     const auth = useAuthStore()
 
-    if (!auth.token)
+    // โหลด token ก่อนเช็ค
+    if (!auth.token) {
+        auth.load()
+    }
+
+    if (!auth.isLoggedIn) {
         return navigateTo("/login")
+    }
 })

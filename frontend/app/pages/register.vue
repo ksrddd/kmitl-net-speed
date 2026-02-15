@@ -10,25 +10,21 @@ const loading = ref(false)
 
 const router = useRouter()
 
-// validate email
-const validEmail = computed(() => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
-})
+const validEmail = computed(() =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
+)
 
-// validate password strength
-const strongPassword = computed(() => {
-    return password.value.length >= 6
-})
+const strongPassword = computed(() =>
+    password.value.length >= 6
+)
 
-// match password
-const matchPassword = computed(() => {
-    return password.value === confirmPassword.value
-})
+const matchPassword = computed(() =>
+    password.value === confirmPassword.value
+)
 
-// form valid
-const formValid = computed(() => {
-    return validEmail.value && strongPassword.value && matchPassword.value
-})
+const formValid = computed(() =>
+    validEmail.value && strongPassword.value && matchPassword.value
+)
 
 const register = async () => {
     error.value = ""
@@ -61,60 +57,170 @@ const register = async () => {
 </script>
 
 <template>
-    <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="auth-bg">
 
-        <div class="card shadow-lg p-4" style="width:380px;border-radius:18px">
+        <div class="auth-card">
 
-            <h3 class="text-center mb-4 fw-bold">Create Account</h3>
+            <h2>Register</h2>
 
             <!-- EMAIL -->
-            <label class="form-label">Email</label>
-            <input v-model="email" type="email" class="form-control mb-2" placeholder="example@email.com">
-            <small v-if="email && !validEmail" class="text-danger">
+            <label>Email</label>
+            <input v-model="email" type="email" placeholder="student_id@kmitl.ac.th">
+            <small v-if="email && !validEmail" class="error">
                 Invalid email format
             </small>
 
-
             <!-- PASSWORD -->
-            <label class="form-label mt-3">Password</label>
-            <input v-model="password" type="password" class="form-control mb-2" placeholder="At least 6 characters">
-            <small v-if="password && !strongPassword" class="text-danger">
+            <label>Password</label>
+            <input v-model="password" type="password" placeholder="At least 6 characters">
+            <small v-if="password && !strongPassword" class="error">
                 Password must be at least 6 characters
             </small>
 
-
             <!-- CONFIRM -->
-            <label class="form-label mt-3">Confirm Password</label>
-            <input v-model="confirmPassword" type="password" class="form-control mb-2">
-            <small v-if="confirmPassword && !matchPassword" class="text-danger">
+            <label>Confirm Password</label>
+            <input v-model="confirmPassword" type="password" placeholder="••••••">
+            <small v-if="confirmPassword && !matchPassword" class="error">
                 Password does not match
             </small>
 
-
             <!-- ERROR -->
-            <div v-if="error" class="alert alert-danger mt-3 py-2">
+            <div v-if="error" class="alert">
                 {{ error }}
             </div>
 
-
             <!-- BUTTON -->
-            <button @click="register" :disabled="!formValid || loading" class="btn btn-primary w-100 mt-3">
-                <span v-if="loading">Creating...</span>
-                <span v-else>Create Account</span>
+            <button @click="register" :disabled="!formValid || loading">
+                {{ loading ? "Creating..." : "Create Account" }}
             </button>
 
-
-            <!-- LOGIN LINK -->
-            <div class="text-center mt-3">
-                <small>
-                    Already have account?
-                    <a href="#" @click.prevent="router.push('/login')">
-                        Login
-                    </a>
-                </small>
-            </div>
+            <!-- LOGIN -->
+            <p class="switch">
+                Already have account?
+                <span @click="router.push('/login')">Login</span>
+            </p>
 
         </div>
 
     </div>
 </template>
+
+<style scoped>
+.auth-bg {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f6f7fb;
+}
+
+/* card */
+.auth-card {
+    width: 360px;
+    padding: 36px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .12);
+    animation: fade .5s ease;
+}
+
+/* animation */
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(15px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+/* titles */
+h2 {
+    text-align: center;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+/* form */
+label {
+    font-weight: 600;
+    margin-top: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 11px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    margin-top: 6px;
+    transition: .2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ff7a18;
+    box-shadow: 0 0 0 3px rgba(255, 122, 24, .15);
+}
+
+/* button */
+button {
+    width: 100%;
+    margin-top: 26px;
+    padding: 13px;
+    border: none;
+    border-radius: 14px;
+    background: #ff7a18;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .25s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* error */
+.error {
+    color: #d10000;
+    font-size: 12px;
+}
+
+.alert {
+    margin-top: 14px;
+    background: #ffe3e3;
+    color: #b30000;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* switch */
+.switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.switch span {
+    color: #ff7a18;
+    font-weight: 700;
+    cursor: pointer;
+}
+</style>

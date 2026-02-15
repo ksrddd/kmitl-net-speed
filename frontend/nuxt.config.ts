@@ -8,5 +8,11 @@ export default defineNuxtConfig({
     "@/assets/css/theme.css"
   ],
 
+  runtimeConfig: {
+    public: {
+      apiBase: "http://127.0.0.1:4000/api"
+    }
+  },
+
   devtools: { enabled: true }
 })
